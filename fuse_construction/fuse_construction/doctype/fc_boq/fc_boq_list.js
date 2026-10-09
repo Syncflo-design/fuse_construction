@@ -1,5 +1,6 @@
 // The construction demo loader sits on the BOQ list, for the person setting the demo profile up.
-// System Manager only. Everything it makes stays in Fuse — no Intacct call.
+// System Manager only, and only on a site whose config marks it as the demo site — a client's
+// own site never shows it. Everything it makes stays in Fuse — no Intacct call.
 
 frappe.listview_settings["FC BOQ"] = {
 	add_fields: ["status", "contract_model"],
@@ -8,7 +9,7 @@ frappe.listview_settings["FC BOQ"] = {
 		return [__(doc.status), colour, "status,=," + doc.status];
 	},
 	onload(listview) {
-		if (!frappe.user.has_role("System Manager")) return;
+		if (!frappe.user.has_role("System Manager") || !frappe.boot.fuse_demo_site) return;
 		listview.page.add_menu_item(__("Load Construction Demo"), () => {
 			frappe.confirm(
 				__("Load the construction demo: a C&I solar + BESS template, a 6.5 MWp + 7 MWh job awarded from it, crews, subcontractors and a civils tender with three bids. Nothing goes to Intacct."),

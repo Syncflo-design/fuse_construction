@@ -22,6 +22,10 @@ fuse_modules = ["fuse_construction.registry.get_modules"]
 fuse_tiles = ["fuse_construction.registry.get_tiles"]
 fuse_guides = ["fuse_construction.guides.get_guides"]
 
+# Tells the desk whether this is the Fuse demo site, so the demo loader's menu item appears
+# there and on no client's site.
+extend_bootinfo = "fuse_construction.demo.nse.boot"
+
 # Nothing here posts through a transaction definition (bills and invoices are generic
 # objects), so there is nothing for the client to map on the Transactions table.
 fuse_processes = []

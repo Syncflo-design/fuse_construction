@@ -129,9 +129,29 @@ WORKERS = [
 ]
 LABOUR_BROKER = "Winelands Labour Solutions (Pty) Ltd"
 
+
+def is_demo_site():
+	"""Only a site whose config sets `fuse_demo_site` is a demo site. A client's never is.
+
+	This loader makes a company, groups, suppliers and a job. On a client's live site that is
+	not a demo, it is pollution — so the guard is in the site's config, which belongs to the
+	site and is not carried by a backup or an app update.
+	"""
+	return bool(frappe.conf.get("fuse_demo_site"))
+
+
+def boot(bootinfo):
+	bootinfo.fuse_demo_site = is_demo_site()
+
+
 @frappe.whitelist()
 def load(project_key="CON-DEMO-6M5"):
 	frappe.only_for("System Manager")
+	if not is_demo_site():
+		frappe.throw(
+			"The construction demo loads only on the Fuse demo site — set fuse_demo_site in that "
+			"site's config. It never loads on a client's site."
+		)
 	project_key = (project_key or "CON-DEMO-6M5").strip()
 
 	from fuse_construction.install import after_install
