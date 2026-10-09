@@ -303,8 +303,10 @@ def _report(label, report):
 
 
 def _cards():
+	"""(module, band, card label, links). Each card sits in its band's column under the
+	tiles; Setup goes last under Site, where it is out of the way."""
 	return [
-		("fc_boq_budget", "Estimating", [
+		("fc_boq_budget", "Jobs", "Estimating", [
 			_doc("Bill of Quantities", "FC BOQ"),
 			_doc("BOQ Template", "FC BOQ Template"),
 			_doc("BOQ Section", "FC BOQ Group"),
@@ -312,30 +314,30 @@ def _cards():
 			_doc("Quotation", "Quotation"),
 			_report("BOQ Summary", "FC BOQ Summary"),
 		]),
-		("fc_boq_budget", "Cost Control", [
+		("fc_boq_budget", "Jobs", "Cost Control", [
 			_report("Project Shape", "FC Project Shape"),
 			_doc("Project Budget", "FC Project Budget"),
 			_doc("Budget Revision", "FC Budget Revision"),
 			_report("Cash Flow Forecast", "FC Cash Flow Forecast"),
 			_doc("Purchase Order", "Purchase Order"),
 		]),
-		("fc_tenders", "Tenders", [
+		("fc_tenders", "Jobs", "Tenders", [
 			_doc("Tender", "FC Tender"),
 			_report("Tender Summary", "FC Tender Summary"),
 		]),
-		("fc_subcontracts", "Subcontracts", [
+		("fc_subcontracts", "Money", "Subcontracts", [
 			_doc("Subcontract", "FC Subcontract"),
 			_doc("Subcontract Certificate", "FC Subcontract Certificate"),
 			_doc("Retention Release", "FC Retention Release"),
 			_report("Subcontract Status", "FC Subcontract Status"),
 			_report("Retention Ledger", "FC Retention Ledger"),
 		]),
-		("fc_client_billing", "Client Billing", [
+		("fc_client_billing", "Money", "Client Billing", [
 			_doc("Client Valuation", "FC Client Valuation"),
 			_doc("Retention Release", "FC Retention Release"),
 			_report("Retention Ledger", "FC Retention Ledger"),
 		]),
-		("fc_site", "Site", [
+		("fc_site", "Site", "Site", [
 			_doc("Crew Timesheet", "FC Crew Timesheet"),
 			_doc("Daily Site Report", "FC Daily Site Report"),
 			_doc("Material Request", "Material Request"),
@@ -343,10 +345,10 @@ def _cards():
 			_report("Crew Hours", "FC Crew Hours"),
 			_report("Payroll Hours Export", "FC Payroll Hours Export"),
 		]),
-		("fc_documents", "Documents", [
+		("fc_documents", "Site", "Documents", [
 			_doc("Document Register", "FC Document Register"),
 		]),
-		(None, "Setup", [
+		(None, "Site", "Setup", [
 			_doc("Construction Settings", "FC Settings"),
 			_doc("Employee", "Employee"),
 			_doc("Activity Type", "Activity Type"),
@@ -373,7 +375,7 @@ def build_workspace():
 		return key is None or active.get(key, True)
 
 	shortcuts = [(band, s) for key, band, s in _shortcuts() if on(key)]
-	cards = [(label, links) for key, label, links in _cards() if on(key)]
+	cards = [(band, label, links) for key, band, label, links in _cards() if on(key)]
 
 	if frappe.db.exists("Workspace", WORKSPACE):
 		doc = frappe.get_doc("Workspace", WORKSPACE)
@@ -398,25 +400,48 @@ def build_workspace():
 	doc.is_hidden = 0
 	doc.sequence_id = 3
 
-	def header(key, text):
-		return {"id": key, "type": "header", "data": {"text": f'<span class="h4"><b>{text}</b></span>', "col": 12}}
+	def header(key, text, col=12):
+		return {"id": key, "type": "header", "data": {"text": f'<span class="h4"><b>{text}</b></span>', "col": col}}
 
-	# Tiles first, four to a row, each band under its own heading; the full menu below.
-	content = []
-	band = None
-	for index, (shortcut_band, shortcut) in enumerate(shortcuts):
-		if shortcut_band != band:
-			band = shortcut_band
-			content.append(header(f"fc_h{index}", band))
+	# The bands are COLUMNS — Jobs, Money, Site side by side, each band's tiles running down
+	# under its heading, and below them that band's cards — so the desk is three across and
+	# everything about one subject sits in one column. The desk lays blocks out left to
+	# right, so the columns are built row by row: each band's first block, then each band's
+	# second, and so on. A band that runs out early gets an empty block, so the columns
+	# beside it stay in line. A band switched off entirely drops out, and the rest widen.
+	tiles = {}
+	for band, shortcut in shortcuts:
+		tiles.setdefault(band, []).append(shortcut)
 		doc.append("shortcuts", dict(shortcut))
-		content.append({"id": f"fc_s{index}", "type": "shortcut", "data": {"shortcut_name": shortcut["label"], "col": 3}})
-	if cards:
-		content.append(header("fc_h_menu", "Everything else"))
-	for index, (label, links) in enumerate(cards):
+	menus = {}
+	for band, label, links in cards:
+		menus.setdefault(band, []).append(label)
 		doc.append("links", {"type": "Card Break", "label": label})
 		for link in links:
 			doc.append("links", dict(link))
-		content.append({"id": f"fc_c{index}", "type": "card", "data": {"card_name": label, "col": 4}})
+
+	bands = list(tiles) + [band for band in menus if band not in tiles]
+	col = 12 // len(bands) if bands else 12
+
+	def columns(prefix, blocks_by_band, block):
+		rows = max((len(blocks_by_band.get(band, [])) for band in bands), default=0)
+		out = []
+		for row in range(rows):
+			for index, band in enumerate(bands):
+				items = blocks_by_band.get(band, [])
+				if row < len(items):
+					out.append(block(f"{prefix}{index}_{row}", items[row]))
+				else:
+					out.append({"id": f"{prefix}p{index}_{row}", "type": "paragraph", "data": {"text": "", "col": col}})
+		return out
+
+	content = [header(f"fc_h{index}", band, col) for index, band in enumerate(bands)]
+	content += columns("fc_s", tiles, lambda key, shortcut: {
+		"id": key, "type": "shortcut", "data": {"shortcut_name": shortcut["label"], "col": col}})
+	if cards:
+		content.append(header("fc_h_menu", "Everything else"))
+	content += columns("fc_c", menus, lambda key, label: {
+		"id": key, "type": "card", "data": {"card_name": label, "col": col}})
 	doc.content = json.dumps(content)
 
 	doc.flags.ignore_permissions = True

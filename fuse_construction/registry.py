@@ -115,18 +115,18 @@ FOLDER = (
 # Keyed by the shortcut LABEL in install._shortcuts — rename one, rename both. A label
 # with no entry here still works; it is drawn as a plain Frappe shortcut.
 DESK_TILES = {
-	"Project Shape": {"svg": CHART, "blurb": "Every job's budget, spend and forecast"},
+	"Project Shape": {"svg": CHART, "blurb": "Budget, spend and forecast, all jobs"},
 	"Dashboard": {"svg": DASHBOARD, "blurb": "One job's cost, programme and curve"},
 	"BOQs": {"svg": CALCULATOR, "blurb": "Estimate, price and award jobs"},
-	"Tenders": {"svg": GAVEL, "blurb": "Packages out to subcontractors and suppliers"},
-	"Subcontracts": {"svg": HANDSHAKE, "blurb": "Subcontract orders and their running accounts"},
-	"Certificates": {"svg": FILE_CHECK, "blurb": "Assess and approve what subcontractors claim"},
-	"Valuations": {"svg": RECEIPT, "blurb": "Bill the client by measure or milestone"},
-	"Retention": {"svg": HAND_COINS, "blurb": "Held both ways, and when it falls due"},
-	"Site": {"svg": PHONE, "blurb": "Crew time, progress and reports on a phone"},
+	"Tenders": {"svg": GAVEL, "blurb": "Packages out to bidders"},
+	"Subcontracts": {"svg": HANDSHAKE, "blurb": "Orders and running accounts"},
+	"Certificates": {"svg": FILE_CHECK, "blurb": "Approve what subcontractors claim"},
+	"Valuations": {"svg": RECEIPT, "blurb": "Bill the client for work done"},
+	"Retention": {"svg": HAND_COINS, "blurb": "Held both ways, and when it is due"},
+	"Site": {"svg": PHONE, "blurb": "The site team's phone screen"},
 	"Crew Time": {"svg": CLOCK, "blurb": "Approve crews' hours onto the job"},
-	"Daily Reports": {"svg": CLIPBOARD, "blurb": "Weather, labour, plant and issues, each day"},
-	"Documents": {"svg": FOLDER, "blurb": "Drawings, RFIs, NCRs and transmittals"},
+	"Daily Reports": {"svg": CLIPBOARD, "blurb": "Weather, labour, plant, issues"},
+	"Documents": {"svg": FOLDER, "blurb": "Drawings, RFIs, NCRs, transmittals"},
 }
 
 
