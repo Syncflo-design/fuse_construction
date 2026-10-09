@@ -10,8 +10,8 @@ Intacct.
 What it makes:
   * the template "C&I Solar PV + BESS": ten sections with a programme and billing milestones,
     lines that scale per kWp / MWp / kWh / MWh;
-  * the job "Demo 6.5 MWp PV + 7 MWh BESS", priced from the template, submitted and awarded —
-    a project with a task per section, and its budget;
+  * the job "Breede River Packhouse 6.5 MWp PV + 7 MWh BESS", starting next Monday, priced
+    from the template, submitted and awarded — a project with a task per section, and its budget;
   * an EPC client, two subcontractors, three suppliers and two more civils bidders;
   * nine workers with trades and rates, for crew time on the phone;
   * the civils tender, published with three bids in — the award is the demo;
@@ -26,12 +26,12 @@ Nothing is certified, valued, booked or received. Those are the demo.
 """
 
 import frappe
-from frappe.utils import add_years, getdate, now_datetime, nowdate
+from frappe.utils import add_days, add_years, getdate, now_datetime, nowdate
 
 from fuse_construction import commercial
 
 TEMPLATE = "C&I Solar PV + BESS"
-TITLE = "Demo 6.5 MWp PV + 7 MWh BESS"
+TITLE = "Breede River Packhouse 6.5 MWp PV + 7 MWh BESS"
 
 # The demo site carries one company per profile. This one is the contractor.
 COMPANY = "Construction"
@@ -166,8 +166,9 @@ def load(project_key="CON-DEMO-6M5"):
 	for name in list(SUBCONTRACTORS.values()) + list(SUPPLIERS.values()) + [b[0] for b in CIVILS_BIDDERS] + [LABOUR_BROKER]:
 		parties[name] = _ensure_party("Supplier", name)
 	client = _ensure_party("Customer", CLIENT)
-	_settings(company)
 	_trades()
+	# After the trades: the settings name one as the default activity type.
+	_settings(company)
 	workers = _workers(company, parties[LABOUR_BROKER])
 	_sections()
 	_template()
@@ -392,7 +393,9 @@ def _boq(project_key, company, client):
 		doc.template = TEMPLATE
 		doc.capacity_kwp = 6500
 		doc.storage_kwh = 7000
-		doc.start_date = nowdate()
+		# Next Monday: a job starting today is already behind its own programme by tonight.
+		today = getdate(nowdate())
+		doc.start_date = add_days(today, 7 - today.weekday())
 		doc.billing_basis = "Milestones"
 		doc.insert(ignore_permissions=True)
 	if doc.docstatus == 0:
