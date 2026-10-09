@@ -94,6 +94,9 @@ def _only_template():
 
 def _describe(boq, deal, template):
 	"""What a BOQ takes from its deal. No start date: that is set when the job is won."""
+	# The construction company from FC Settings, never the clicking user's default: on a site
+	# with more than one company, a salesperson's default can be any of them.
+	boq.company = settings.company()
 	boq.title = _client_name(deal)[:140]
 	boq.contract_model = deal.get("fc_contract_model") or "EPC"
 	boq.template = template
