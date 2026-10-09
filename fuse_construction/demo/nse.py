@@ -36,15 +36,19 @@ TITLE = "Demo 6.5 MWp PV + 7 MWh BESS"
 # The demo site carries one company per profile. This one is the contractor.
 COMPANY = "Construction"
 COMPANY_ABBR = "CON"
+
+# Its items, suppliers and client sit in item / supplier / customer groups of this name, so a
+# presenter limited to them sees none of the manufacturing profile's masters.
+GROUP = "Construction"
 CLIENT = "Breede River Packhouse (Pty) Ltd"
 
 SUBCONTRACTORS = {
-	"civils": "Karoo Civils (Pty) Ltd",
+	"civils": "Klein Karoo Civils (Pty) Ltd",
 	"electrical": "Boland Electrical Contractors (Pty) Ltd",
 }
 SUPPLIERS = {
-	"modules": "Helios PV Supply (Pty) Ltd",
-	"inverters": "Cape Inverter Systems (Pty) Ltd",
+	"modules": "Helios Solar Supply (Pty) Ltd",
+	"inverters": "Cape Power Electronics (Pty) Ltd",
 	"batteries": "Southern Storage Systems (Pty) Ltd",
 }
 CIVILS_BIDDERS = [
@@ -197,6 +201,17 @@ def _ensure_uom(name):
 		frappe.get_doc({"doctype": "UOM", "uom_name": name, "must_be_whole_number": 0}).insert(ignore_permissions=True)
 
 
+def _group(doctype):
+	"""This profile's own group in an item / supplier / customer group tree, made if missing."""
+	field = frappe.scrub(doctype)  # item_group, supplier_group, customer_group
+	if not frappe.db.exists(doctype, GROUP):
+		root = frappe.db.get_value(doctype, {"is_group": 1, f"parent_{field}": ("is", "not set")}, "name")
+		frappe.get_doc(
+			{"doctype": doctype, f"{field}_name": GROUP, f"parent_{field}": root, "is_group": 0}
+		).insert(ignore_permissions=True)
+	return GROUP
+
+
 def _leaf(doctype, preferred):
 	if preferred and frappe.db.exists(doctype, preferred):
 		return preferred
@@ -205,6 +220,7 @@ def _leaf(doctype, preferred):
 
 def _ensure_item(code, name, uom, purchase, sales):
 	if frappe.db.exists("Item", code):
+		frappe.db.set_value("Item", code, "item_group", _group("Item Group"))
 		return code
 	frappe.get_doc(
 		{
@@ -212,7 +228,7 @@ def _ensure_item(code, name, uom, purchase, sales):
 			"item_code": code,
 			"item_name": name,
 			"description": name,
-			"item_group": _leaf("Item Group", "Products"),
+			"item_group": _group("Item Group"),
 			"stock_uom": uom,
 			"is_stock_item": 0,
 			"is_purchase_item": purchase,
@@ -225,15 +241,17 @@ def _ensure_item(code, name, uom, purchase, sales):
 
 def _ensure_party(doctype, name):
 	field = "supplier_name" if doctype == "Supplier" else "customer_name"
+	group_doctype = f"{doctype} Group"
 	existing = frappe.db.get_value(doctype, {field: name}, "name")
 	if existing:
+		frappe.db.set_value(doctype, existing, frappe.scrub(group_doctype), _group(group_doctype))
 		return existing
 	doc = frappe.new_doc(doctype)
 	doc.set(field, name)
 	if doctype == "Supplier":
-		doc.supplier_group = _leaf("Supplier Group", "Services")
+		doc.supplier_group = _group(group_doctype)
 	else:
-		doc.customer_group = _leaf("Customer Group", "Commercial")
+		doc.customer_group = _group(group_doctype)
 		doc.territory = _leaf("Territory", "South Africa")
 		doc.customer_type = "Company"
 	doc.insert(ignore_permissions=True)
