@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOQ, Award and Budget — Fuse</title>
+<style>
+:root {
+	--ink: #14202a;
+	--soft: #55636e;
+	--faint: #8a949d;
+	--rule: #e3e7ea;
+	--ground: #ffffff;
+	--panel: #f6f8f9;
+	--accent: #1a7a4c;
+	--accent-soft: #e8f3ed;
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--ink: #e8edf1;
+		--soft: #a9b4bd;
+		--faint: #7c868f;
+		--rule: #2b3640;
+		--ground: #141a20;
+		--panel: #1b232b;
+		--accent: #4cc088;
+		--accent-soft: #16302380;
+	}
+}
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	padding: 0 24px 96px;
+	background: var(--ground);
+	color: var(--ink);
+	font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+main { max-width: 46rem; margin: 0 auto; }
+header.guide {
+	max-width: 46rem;
+	margin: 0 auto;
+	padding: 40px 0 20px;
+	border-bottom: 2px solid var(--ink);
+}
+header.guide .eyebrow {
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin: 0 0 6px;
+}
+header.guide h1 { font-size: 2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+header.guide .standfirst { color: var(--soft); margin: 8px 0 0; }
+h2 {
+	font-size: 1.25rem;
+	margin: 2.4rem 0 .6rem;
+	padding-top: 1.4rem;
+	border-top: 1px solid var(--rule);
+	text-wrap: balance;
+}
+h3 { font-size: 1.02rem; margin: 1.6rem 0 .4rem; text-wrap: balance; }
+p, li { color: var(--soft); }
+li { margin: .25rem 0; }
+strong { color: var(--ink); font-weight: 600; }
+ol, ul { padding-left: 1.3rem; }
+code {
+	background: var(--panel);
+	border: 1px solid var(--rule);
+	border-radius: 4px;
+	padding: .08em .35em;
+	font-size: .88em;
+	color: var(--ink);
+}
+.table-scroll { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+th, td {
+	text-align: left;
+	padding: .5rem .7rem;
+	border-bottom: 1px solid var(--rule);
+	vertical-align: top;
+	color: var(--soft);
+}
+th { color: var(--ink); font-weight: 600; background: var(--panel); }
+blockquote {
+	margin: 1.2rem 0;
+	padding: .7rem 1rem;
+	border-left: 3px solid var(--accent);
+	background: var(--accent-soft);
+	border-radius: 0 6px 6px 0;
+}
+blockquote p { margin: .3rem 0; }
+figure.shot {
+	margin: 1.4rem 0;
+	padding: 1.6rem 1rem;
+	border: 1px dashed var(--rule);
+	border-radius: 8px;
+	background: var(--panel);
+	text-align: center;
+}
+figure.shot .label {
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+figure.shot .what { display: block; margin-top: .3rem; color: var(--faint); font-size: .9rem; }
+/* A real screenshot, rather than the gap where one is going. Solid border instead of the
+   dashed one, and no inner padding — the picture is the content, not something sitting
+   inside a placeholder. */
+figure.shot--image {
+	padding: 0;
+	border: 1px solid var(--rule);
+	background: var(--ground);
+	overflow: hidden;
+}
+figure.shot--image img { display: block; width: 100%; height: auto; }
+figure.shot--image figcaption {
+	padding: .5rem .8rem;
+	border-top: 1px solid var(--rule);
+	background: var(--panel);
+	color: var(--faint);
+	font-size: .85rem;
+	text-align: left;
+}
+footer.guide {
+	max-width: 46rem;
+	margin: 3rem auto 0;
+	padding-top: 1rem;
+	border-top: 1px solid var(--rule);
+	color: var(--faint);
+	font-size: .85rem;
+}
+@media print {
+	body { padding: 0; }
+	figure.shot { break-inside: avoid; }
+	h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="guide">
+	<p class="eyebrow">Fuse user guide 01</p>
+	<h1>BOQ, Award and Budget</h1>
+	<p class="standfirst">Pricing a job, opening it, and the budget it is measured against — Fuse Construction user guide 01</p>
+</header>
+<main>
+<h2>What the BOQ is for</h2>
+<p>The bill of quantities is the price of the job, section by section. Once it is awarded it is
+also the job's <strong>budget</strong>: everything spent, committed and earned is measured against it.</p>
+<p>A BOQ moves through three steps:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Draft</td>
+<td>Being priced. Change anything.</td>
+</tr>
+<tr>
+<td>Submitted</td>
+<td>The price is agreed. Lines are locked.</td>
+</tr>
+<tr>
+<td>Awarded</td>
+<td>The project is open, with a task per section, and the cost is its budget.</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Pricing from a template</h2>
+<p>The same kind of plant is built again and again, so a template carries the lines once and
+sizes them to each job.</p>
+<ol>
+<li><strong>Construction → BOQs → New.</strong></li>
+<li>Enter the <strong>Job Name</strong>, choose <strong>Model</strong> (EPC for a client, IPP for the company's own plant)
+   and, for EPC, the <strong>Client</strong>.</li>
+<li>Choose the <strong>Template</strong> and enter the plant size: <strong>PV Capacity (kWp)</strong> and <strong>Storage (kWh)</strong>.</li>
+<li>Press <strong>Apply Template</strong>. Every line arrives with its quantity worked out: a line priced
+   "per kWp" multiplies by the PV size, "per kWh" by the storage, "Fixed" stays as it is.</li>
+<li>Check the lines and the <strong>Margin on Cost</strong>. Save.</li>
+</ol>
+<p>The <strong>Project Code</strong> is the job's code in Intacct. Leave it empty and one is numbered for you.</p>
+<figure class="shot"><span class="label">Screenshot: a BOQ after Apply Template</span><span class="what">BOQ form, Bill of Quantities tab, showing lines sized to 6.5 MWp + 7 MWh</span></figure>
+<h3>Rate build-up</h3>
+<p>Open a line's <strong>Rate Build-up</strong> and fill in labour, plant, material and subcontract. They add
+up to the line's rate.</p>
+<h3>Sections and programme</h3>
+<p>Each section of the BOQ gets a row under <strong>Sections and Programme</strong> with its budget, contract
+value and planned dates (taken from the template's programme and the BOQ's start date). Adjust
+the dates if the programme differs — they are the baseline that planned value is measured
+against.</p>
+<h2>Revising before award</h2>
+<p>Cancel the submitted BOQ and press <strong>Amend</strong>. The amendment keeps the history and counts the
+revision.</p>
+<h2>Awarding</h2>
+<p>On a submitted BOQ press <strong>Award</strong>. Fuse:</p>
+<ul>
+<li>opens a <strong>Project</strong> (or uses the one you chose in the Project field — for example one already
+  brought across from Intacct),</li>
+<li>creates a <strong>Task per section</strong>, on the planned dates,</li>
+<li>creates the <strong>FC Project Budget</strong> from the BOQ's cost.</li>
+</ul>
+<p>An awarded BOQ cannot be cancelled: it is the baseline.</p>
+<h2>Changing the budget after award</h2>
+<p>Use <strong>Create → Budget Revision</strong>. It starts with every section's current budget; enter the
+change against the sections that move and give the reason. Submitting approves it. A
+<strong>Transfer between Sections</strong> must add up to zero.</p>
+<h2>From the BOQ</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Create</th>
+<th>What it makes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tender</td>
+<td>A tender for one section, scope and estimate filled in</td>
+</tr>
+<tr>
+<td>Subcontract</td>
+<td>A subcontract for one section, without tendering</td>
+</tr>
+<tr>
+<td>Material Request</td>
+<td>A request for the material lines that are purchasable items</td>
+</tr>
+<tr>
+<td>Quotation</td>
+<td>A quotation for the client, by section or as a lump sum</td>
+</tr>
+<tr>
+<td>Client Valuation</td>
+<td>The next valuation to the client</td>
+</tr>
+</tbody>
+</table></div>
+</main>
+<footer class="guide">Fuse Manufacturing — Syncflo. Printed from the Guides page.</footer>
+</body>
+</html>

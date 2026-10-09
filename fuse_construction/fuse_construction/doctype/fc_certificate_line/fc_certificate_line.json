@@ -1,0 +1,159 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "subcontract_line",
+  "boq_group",
+  "description",
+  "contract_amount",
+  "previous_amount",
+  "to_date_qty",
+  "to_date_percent",
+  "to_date_amount",
+  "this_amount",
+  "line_detail",
+  "task",
+  "uom",
+  "contract_qty",
+  "rate",
+  "line_detail_col",
+  "previous_qty",
+  "this_qty"
+ ],
+ "fields": [
+  {
+   "fieldname": "subcontract_line",
+   "fieldtype": "Data",
+   "label": "Subcontract Line",
+   "hidden": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq_group",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "FC BOQ Group",
+   "in_list_view": 1,
+   "columns": 2,
+   "read_only": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "in_list_view": 1,
+   "columns": 2,
+   "read_only": 1
+  },
+  {
+   "fieldname": "contract_amount",
+   "fieldtype": "Currency",
+   "label": "Line Value",
+   "in_list_view": 1,
+   "columns": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "previous_amount",
+   "fieldtype": "Currency",
+   "label": "Previous",
+   "in_list_view": 1,
+   "columns": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "to_date_qty",
+   "fieldtype": "Float",
+   "label": "Qty to Date",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "to_date_percent",
+   "fieldtype": "Percent",
+   "label": "% to Date",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "to_date_amount",
+   "fieldtype": "Currency",
+   "label": "To Date",
+   "in_list_view": 1,
+   "columns": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "this_amount",
+   "fieldtype": "Currency",
+   "label": "This Certificate",
+   "in_list_view": 1,
+   "columns": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "line_detail",
+   "fieldtype": "Section Break",
+   "label": "Detail",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "Task",
+   "read_only": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Unit",
+   "options": "UOM",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contract_qty",
+   "fieldtype": "Float",
+   "label": "Contract Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "line_detail_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "previous_qty",
+   "fieldtype": "Float",
+   "label": "Previous Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "this_qty",
+   "fieldtype": "Float",
+   "label": "Qty This Certificate",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Certificate Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

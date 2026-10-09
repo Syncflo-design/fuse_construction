@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subcontracts and Retention — Fuse</title>
+<style>
+:root {
+	--ink: #14202a;
+	--soft: #55636e;
+	--faint: #8a949d;
+	--rule: #e3e7ea;
+	--ground: #ffffff;
+	--panel: #f6f8f9;
+	--accent: #1a7a4c;
+	--accent-soft: #e8f3ed;
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--ink: #e8edf1;
+		--soft: #a9b4bd;
+		--faint: #7c868f;
+		--rule: #2b3640;
+		--ground: #141a20;
+		--panel: #1b232b;
+		--accent: #4cc088;
+		--accent-soft: #16302380;
+	}
+}
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	padding: 0 24px 96px;
+	background: var(--ground);
+	color: var(--ink);
+	font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+main { max-width: 46rem; margin: 0 auto; }
+header.guide {
+	max-width: 46rem;
+	margin: 0 auto;
+	padding: 40px 0 20px;
+	border-bottom: 2px solid var(--ink);
+}
+header.guide .eyebrow {
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin: 0 0 6px;
+}
+header.guide h1 { font-size: 2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+header.guide .standfirst { color: var(--soft); margin: 8px 0 0; }
+h2 {
+	font-size: 1.25rem;
+	margin: 2.4rem 0 .6rem;
+	padding-top: 1.4rem;
+	border-top: 1px solid var(--rule);
+	text-wrap: balance;
+}
+h3 { font-size: 1.02rem; margin: 1.6rem 0 .4rem; text-wrap: balance; }
+p, li { color: var(--soft); }
+li { margin: .25rem 0; }
+strong { color: var(--ink); font-weight: 600; }
+ol, ul { padding-left: 1.3rem; }
+code {
+	background: var(--panel);
+	border: 1px solid var(--rule);
+	border-radius: 4px;
+	padding: .08em .35em;
+	font-size: .88em;
+	color: var(--ink);
+}
+.table-scroll { overflow-x: auto; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .93rem; }
+th, td {
+	text-align: left;
+	padding: .5rem .7rem;
+	border-bottom: 1px solid var(--rule);
+	vertical-align: top;
+	color: var(--soft);
+}
+th { color: var(--ink); font-weight: 600; background: var(--panel); }
+blockquote {
+	margin: 1.2rem 0;
+	padding: .7rem 1rem;
+	border-left: 3px solid var(--accent);
+	background: var(--accent-soft);
+	border-radius: 0 6px 6px 0;
+}
+blockquote p { margin: .3rem 0; }
+figure.shot {
+	margin: 1.4rem 0;
+	padding: 1.6rem 1rem;
+	border: 1px dashed var(--rule);
+	border-radius: 8px;
+	background: var(--panel);
+	text-align: center;
+}
+figure.shot .label {
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+figure.shot .what { display: block; margin-top: .3rem; color: var(--faint); font-size: .9rem; }
+/* A real screenshot, rather than the gap where one is going. Solid border instead of the
+   dashed one, and no inner padding — the picture is the content, not something sitting
+   inside a placeholder. */
+figure.shot--image {
+	padding: 0;
+	border: 1px solid var(--rule);
+	background: var(--ground);
+	overflow: hidden;
+}
+figure.shot--image img { display: block; width: 100%; height: auto; }
+figure.shot--image figcaption {
+	padding: .5rem .8rem;
+	border-top: 1px solid var(--rule);
+	background: var(--panel);
+	color: var(--faint);
+	font-size: .85rem;
+	text-align: left;
+}
+footer.guide {
+	max-width: 46rem;
+	margin: 3rem auto 0;
+	padding-top: 1rem;
+	border-top: 1px solid var(--rule);
+	color: var(--faint);
+	font-size: .85rem;
+}
+@media print {
+	body { padding: 0; }
+	figure.shot { break-inside: avoid; }
+	h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="guide">
+	<p class="eyebrow">Fuse user guide 04</p>
+	<h1>Subcontracts and Retention</h1>
+	<p class="standfirst">Part payments, advances and staggered retention — Fuse Construction user guide 04</p>
+</header>
+<main>
+<h2>The subcontract</h2>
+<p>A subcontract comes from a tender award or straight from the BOQ. It holds:</p>
+<ul>
+<li>the <strong>scope lines</strong> — quantity × rate, each on a BOQ section;</li>
+<li>the <strong>advance</strong> — a % or amount paid up front, and the % of each certificate that recovers it;</li>
+<li><strong>retention</strong> — the % held on each certificate, and the <strong>cap</strong> (as a % of the value);</li>
+<li><strong>release stages</strong> — usually 50% at practical completion and 50% at the end of the defects
+  liability period. Any number of stages, adding up to 100%;</li>
+<li>the <strong>payment schedule</strong> — when each payment is expected. Press <strong>Generate Payment
+  Schedule</strong>, then adjust it to what was agreed.</li>
+</ul>
+<p>Submitting it commits the cost to the job. If FC Settings says so, a matching purchase order
+is raised too.</p>
+<h2>Paying the advance</h2>
+<p><strong>Create → Advance Payment.</strong> The certificate pays the advance and nothing else.</p>
+<h2>Monthly certificates</h2>
+<p><strong>Create → Progress Certificate.</strong> Every scope line arrives with what was certified before.
+For each line enter the <strong>quantity or % done to date</strong> — not this month's work. Fuse works out:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This certificate</td>
+<td>Work to date less work certified before</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>The retention % of this certificate, until the cap is reached</td>
+</tr>
+<tr>
+<td>Advance recovered</td>
+<td>The recovery % of this certificate, until the advance is back — and all of it on the certificate that reaches 100%</td>
+</tr>
+<tr>
+<td>Contra-charges</td>
+<td>Add each one with its reason</td>
+</tr>
+<tr>
+<td>Net payable</td>
+<td>What is left</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot"><span class="label">Screenshot: a certificate with retention, recovery and a contra-charge</span><span class="what">FC Subcontract Certificate, Payable section</span></figure>
+<h3>Approval</h3>
+<p>Where the approval workflow is on: the QS <strong>Assesses</strong>, the project manager <strong>Approves</strong>
+(which submits it), and finance <strong>Releases</strong> it for payment. Release is when it would post to
+Intacct, once posting is switched on.</p>
+<p>A certificate cannot be cancelled while a later one exists: each builds on the one before.</p>
+<h2>Releasing retention</h2>
+<p>Record <strong>Practical Completion</strong> on the subcontract. Each stage's due date follows (the DLP
+stage = practical completion + the DLP months), and a reminder goes to the project managers
+before and on the day it falls due.</p>
+<p><strong>Create → Retention Release</strong>, choose the stage. The amount is the stage's share of all
+retention held; the last stage releases whatever is left.</p>
+<h2>Reports</h2>
+<ul>
+<li><strong>Retention Ledger</strong> — held, released and outstanding, the next stage and when.</li>
+<li><strong>Subcontract Status</strong> — value, certified, retention, advance, paid.</li>
+<li><strong>Cash Flow Forecast</strong> — what is due out and in, month by month.</li>
+</ul>
+</main>
+<footer class="guide">Fuse Manufacturing — Syncflo. Printed from the Guides page.</footer>
+</body>
+</html>

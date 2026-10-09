@@ -1,0 +1,517 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_tab",
+  "naming_series",
+  "subcontract",
+  "supplier",
+  "project",
+  "boq",
+  "company",
+  "details_col_1",
+  "certificate_type",
+  "certificate_no",
+  "posting_date",
+  "period_from",
+  "period_to",
+  "details_col_2",
+  "approval_state",
+  "due_date",
+  "schedule_row",
+  "lines_section",
+  "lines",
+  "valuation_section",
+  "gross_to_date",
+  "previously_certified",
+  "gross_this_certificate",
+  "valuation_col",
+  "subcontract_value",
+  "percent_certified",
+  "deductions_section",
+  "retention_percent",
+  "retention_cap_amount",
+  "retention_held_before",
+  "retention_this",
+  "deductions_col_1",
+  "advance_recovery_percent",
+  "advance_outstanding_before",
+  "advance_recovery_this",
+  "deductions_col_2",
+  "contra_total",
+  "contra_section",
+  "contra_charges",
+  "net_section",
+  "advance_payment_amount",
+  "net_payable",
+  "net_col",
+  "notes",
+  "intacct_tab",
+  "intacct_section",
+  "intacct_status",
+  "intacct_key",
+  "intacct_posted_on",
+  "intacct_col",
+  "paid_on",
+  "intacct_error",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FC-SCC-.YYYY.-.####",
+   "reqd": 1,
+   "default": "FC-SCC-.YYYY.-.####",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "subcontract",
+   "fieldtype": "Link",
+   "label": "Subcontract",
+   "options": "FC Subcontract",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Subcontractor",
+   "options": "Supplier",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "in_standard_filter": 1,
+   "search_index": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq",
+   "fieldtype": "Link",
+   "label": "BOQ",
+   "options": "FC BOQ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "details_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "certificate_type",
+   "fieldtype": "Select",
+   "label": "Certificate For",
+   "options": "Progress\nAdvance Payment",
+   "default": "Progress",
+   "reqd": 1
+  },
+  {
+   "fieldname": "certificate_no",
+   "fieldtype": "Int",
+   "label": "Certificate No.",
+   "in_list_view": 1,
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Period From",
+   "depends_on": "eval:doc.certificate_type=='Progress'"
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Period To",
+   "depends_on": "eval:doc.certificate_type=='Progress'"
+  },
+  {
+   "fieldname": "details_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approval_state",
+   "fieldtype": "Select",
+   "label": "Approval",
+   "options": "Draft\nAssessed\nApproved\nReleased\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "schedule_row",
+   "fieldtype": "Data",
+   "label": "Payment Schedule Row",
+   "hidden": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "lines_section",
+   "fieldtype": "Section Break",
+   "label": "Measured Work",
+   "depends_on": "eval:doc.certificate_type=='Progress'",
+   "description": "Enter the quantity or % done TO DATE on each line. This period is worked out from the certificate before."
+  },
+  {
+   "fieldname": "lines",
+   "fieldtype": "Table",
+   "label": "Lines",
+   "options": "FC Certificate Line"
+  },
+  {
+   "fieldname": "valuation_section",
+   "fieldtype": "Section Break",
+   "label": "Valuation",
+   "depends_on": "eval:doc.certificate_type=='Progress'"
+  },
+  {
+   "fieldname": "gross_to_date",
+   "fieldtype": "Currency",
+   "label": "Certified to Date",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "previously_certified",
+   "fieldtype": "Currency",
+   "label": "Previously Certified",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "gross_this_certificate",
+   "fieldtype": "Currency",
+   "label": "This Certificate (Gross)",
+   "in_list_view": 1,
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "valuation_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subcontract_value",
+   "fieldtype": "Currency",
+   "label": "Subcontract Value",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "percent_certified",
+   "fieldtype": "Percent",
+   "label": "% Certified to Date",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "deductions_section",
+   "fieldtype": "Section Break",
+   "label": "Deductions",
+   "depends_on": "eval:doc.certificate_type=='Progress'"
+  },
+  {
+   "fieldname": "retention_percent",
+   "fieldtype": "Percent",
+   "label": "Retention %",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "retention_cap_amount",
+   "fieldtype": "Currency",
+   "label": "Retention Cap",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "retention_held_before",
+   "fieldtype": "Currency",
+   "label": "Retention Held Before",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "retention_this",
+   "fieldtype": "Currency",
+   "label": "Retention This Certificate",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "deductions_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "advance_recovery_percent",
+   "fieldtype": "Percent",
+   "label": "Advance Recovery %",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "advance_outstanding_before",
+   "fieldtype": "Currency",
+   "label": "Advance Outstanding Before",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "advance_recovery_this",
+   "fieldtype": "Currency",
+   "label": "Advance Recovered This Certificate",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "deductions_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contra_total",
+   "fieldtype": "Currency",
+   "label": "Contra-charges",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "contra_section",
+   "fieldtype": "Section Break",
+   "label": "Contra-charges",
+   "depends_on": "eval:doc.certificate_type=='Progress'",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "contra_charges",
+   "fieldtype": "Table",
+   "label": "Contra-charges",
+   "options": "FC Contra Charge"
+  },
+  {
+   "fieldname": "net_section",
+   "fieldtype": "Section Break",
+   "label": "Payable"
+  },
+  {
+   "fieldname": "advance_payment_amount",
+   "fieldtype": "Currency",
+   "label": "Advance Payable",
+   "no_copy": 1,
+   "depends_on": "eval:doc.certificate_type=='Advance Payment'",
+   "read_only": 1
+  },
+  {
+   "fieldname": "net_payable",
+   "fieldtype": "Currency",
+   "label": "Net Payable",
+   "in_list_view": 1,
+   "no_copy": 1,
+   "bold": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "net_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "intacct_tab",
+   "fieldtype": "Tab Break",
+   "label": "Intacct"
+  },
+  {
+   "fieldname": "intacct_section",
+   "fieldtype": "Section Break",
+   "description": "Filled when this document is posted to Sage Intacct. Posting is switched off until Post to Intacct is ticked in FC Settings; until then these stay empty and nothing leaves Fuse."
+  },
+  {
+   "fieldname": "intacct_status",
+   "fieldtype": "Select",
+   "label": "Intacct Status",
+   "options": "Not Posted\nPosted\nPaid\nFailed",
+   "default": "Not Posted",
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "intacct_key",
+   "fieldtype": "Data",
+   "label": "Intacct Key",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "intacct_posted_on",
+   "fieldtype": "Datetime",
+   "label": "Posted to Intacct",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "intacct_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "paid_on",
+   "fieldtype": "Date",
+   "label": "Paid On",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "intacct_error",
+   "fieldtype": "Small Text",
+   "label": "Last Intacct Error",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "FC Subcontract Certificate",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Subcontract Certificate",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Accounts Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts User",
+   "read": 1,
+   "write": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  },
+  {
+   "role": "Purchase Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "is_submittable": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "track_changes": 1
+}

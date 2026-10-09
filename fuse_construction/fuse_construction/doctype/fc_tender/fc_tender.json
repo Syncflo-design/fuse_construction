@@ -1,0 +1,417 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "tender_title",
+  "project",
+  "boq",
+  "boq_group",
+  "package_type",
+  "company",
+  "head_col_1",
+  "tender_type",
+  "procurement_method",
+  "status",
+  "head_col_2",
+  "publish_date",
+  "submission_deadline",
+  "bid_open_date",
+  "estimated_value",
+  "bid_bond_amount",
+  "scope_section",
+  "scope_of_work",
+  "scope_col",
+  "eligibility_criteria",
+  "items_section",
+  "items",
+  "documents_section",
+  "documents",
+  "bidders_section",
+  "bidders",
+  "bidder_count",
+  "quotes_received",
+  "evaluation_section",
+  "lowest_bidder",
+  "lowest_bid_amount",
+  "awarded_to",
+  "award_amount",
+  "award_date",
+  "evaluation_col",
+  "evaluation_notes",
+  "subcontract",
+  "purchase_order",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FC-TND-.YYYY.-.####",
+   "reqd": 1,
+   "default": "FC-TND-.YYYY.-.####",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "tender_title",
+   "fieldtype": "Data",
+   "label": "Tender",
+   "reqd": 1,
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "boq",
+   "fieldtype": "Link",
+   "label": "BOQ",
+   "options": "FC BOQ"
+  },
+  {
+   "fieldname": "boq_group",
+   "fieldtype": "Link",
+   "label": "Package / Section",
+   "options": "FC BOQ Group"
+  },
+  {
+   "fieldname": "package_type",
+   "fieldtype": "Select",
+   "label": "Package",
+   "options": "Subcontract\nSupply",
+   "default": "Subcontract",
+   "reqd": 1,
+   "description": "Subcontract: the award opens a subcontract. Supply: the award raises a purchase order."
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "head_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tender_type",
+   "fieldtype": "Select",
+   "label": "Tender Type",
+   "options": "\nOpen Tender\nLimited Tender\nSingle Source\nNegotiated\nRequest for Quotation\nRequest for Proposal"
+  },
+  {
+   "fieldname": "procurement_method",
+   "fieldtype": "Select",
+   "label": "Procurement Method",
+   "options": "\nNational\nInternational\nDirect Contracting\nFramework Agreement"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nPublished\nUnder Evaluation\nAwarded\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "head_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "publish_date",
+   "fieldtype": "Date",
+   "label": "Publish Date"
+  },
+  {
+   "fieldname": "submission_deadline",
+   "fieldtype": "Datetime",
+   "label": "Submission Deadline",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bid_open_date",
+   "fieldtype": "Datetime",
+   "label": "Bid Opening"
+  },
+  {
+   "fieldname": "estimated_value",
+   "fieldtype": "Currency",
+   "label": "Estimated Value",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "bid_bond_amount",
+   "fieldtype": "Currency",
+   "label": "Bid Bond"
+  },
+  {
+   "fieldname": "scope_section",
+   "fieldtype": "Section Break",
+   "label": "Scope"
+  },
+  {
+   "fieldname": "scope_of_work",
+   "fieldtype": "Text Editor",
+   "label": "Scope of Work"
+  },
+  {
+   "fieldname": "scope_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "eligibility_criteria",
+   "fieldtype": "Text Editor",
+   "label": "Eligibility and Compliance"
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break",
+   "label": "Scope Lines",
+   "description": "From the BOQ. Estimated value is their total."
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Lines",
+   "options": "FC Tender Item"
+  },
+  {
+   "fieldname": "documents_section",
+   "fieldtype": "Section Break",
+   "label": "Tender Documents",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "documents",
+   "fieldtype": "Table",
+   "label": "Documents",
+   "options": "FC Tender Document"
+  },
+  {
+   "fieldname": "bidders_section",
+   "fieldtype": "Section Break",
+   "label": "Bidders",
+   "description": "Bids can be recorded after the tender is published. The comparison is the table itself: amount, programme and compliance side by side."
+  },
+  {
+   "fieldname": "bidders",
+   "fieldtype": "Table",
+   "label": "Bidders",
+   "options": "FC Tender Bidder",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "bidder_count",
+   "fieldtype": "Int",
+   "label": "Bidders",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "quotes_received",
+   "fieldtype": "Int",
+   "label": "Bids Received",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "evaluation_section",
+   "fieldtype": "Section Break",
+   "label": "Evaluation and Award"
+  },
+  {
+   "fieldname": "lowest_bidder",
+   "fieldtype": "Link",
+   "label": "Lowest Compliant Bid",
+   "options": "Supplier",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "lowest_bid_amount",
+   "fieldtype": "Currency",
+   "label": "Lowest Bid",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "awarded_to",
+   "fieldtype": "Link",
+   "label": "Awarded To",
+   "options": "Supplier",
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "award_amount",
+   "fieldtype": "Currency",
+   "label": "Award Amount",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "award_date",
+   "fieldtype": "Date",
+   "label": "Award Date",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "evaluation_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "evaluation_notes",
+   "fieldtype": "Text Editor",
+   "label": "Evaluation Notes",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "subcontract",
+   "fieldtype": "Link",
+   "label": "Subcontract",
+   "options": "FC Subcontract",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "purchase_order",
+   "fieldtype": "Link",
+   "label": "Purchase Order",
+   "options": "Purchase Order",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "FC Tender",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Tender",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Purchase Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Purchase User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  },
+  {
+   "role": "Projects User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts User",
+   "read": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "is_submittable": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "title_field": "tender_title",
+ "show_title_field_in_link": 1,
+ "track_changes": 1
+}

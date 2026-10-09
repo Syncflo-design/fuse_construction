@@ -1,0 +1,618 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_tab",
+  "naming_series",
+  "title",
+  "project_key",
+  "contract_model",
+  "contract_type",
+  "details_col_1",
+  "customer",
+  "company",
+  "currency",
+  "project",
+  "details_col_2",
+  "status",
+  "revision",
+  "awarded_on",
+  "quotation",
+  "crm_deal",
+  "size_section",
+  "template",
+  "capacity_kwp",
+  "storage_kwh",
+  "size_col",
+  "start_date",
+  "end_date",
+  "practical_completion_date",
+  "items_tab",
+  "items",
+  "price_section",
+  "markup_percent",
+  "total_cost",
+  "price_col_1",
+  "contract_value",
+  "gross_margin",
+  "gross_margin_percent",
+  "by_type_section",
+  "material_cost",
+  "labour_cost",
+  "plant_cost",
+  "by_type_col",
+  "subcontract_cost",
+  "overhead_cost",
+  "sections_section",
+  "sections",
+  "client_tab",
+  "billing_basis",
+  "payment_terms_days",
+  "client_advance_percent",
+  "client_col_1",
+  "client_retention_percent",
+  "client_retention_cap_percent",
+  "dlp_months",
+  "client_col_2",
+  "ld_percent_per_week",
+  "ld_cap_percent",
+  "client_position_section",
+  "valued_to_date",
+  "client_advance_invoiced",
+  "client_advance_recovered",
+  "client_position_col",
+  "client_retention_held",
+  "client_retention_released",
+  "milestones_section",
+  "milestones",
+  "client_stages_section",
+  "client_release_stages",
+  "intacct_tab",
+  "intacct_section",
+  "intacct_project_id",
+  "intacct_project_recordno",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FC-BOQ-.YYYY.-.####",
+   "reqd": 1,
+   "default": "FC-BOQ-.YYYY.-.####",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Job Name",
+   "reqd": 1,
+   "in_list_view": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "project_key",
+   "fieldtype": "Data",
+   "label": "Project Code",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "The job's code in Intacct (PROJECTID). Set once and never re-keyed. Left empty, it is numbered from FC Settings."
+  },
+  {
+   "fieldname": "contract_model",
+   "fieldtype": "Select",
+   "label": "Model",
+   "options": "EPC\nIPP",
+   "reqd": 1,
+   "default": "EPC",
+   "in_standard_filter": 1,
+   "description": "EPC: built for a client and billed. IPP: the company's own plant, capitalised at commercial operation."
+  },
+  {
+   "fieldname": "contract_type",
+   "fieldtype": "Select",
+   "label": "Contract Type",
+   "options": "\nLump Sum\nRe-measurable\nCost Plus Fee\nReimbursable"
+  },
+  {
+   "fieldname": "details_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Customer",
+   "depends_on": "eval:doc.contract_model=='EPC'",
+   "mandatory_depends_on": "eval:doc.contract_model=='EPC'",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "fetch_from": "company.default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "allow_on_submit": 1,
+   "read_only_depends_on": "eval:doc.docstatus==1",
+   "in_standard_filter": 1,
+   "description": "Leave empty and Award opens a new project. Choose one to award into an existing project — one already brought across from Intacct, for example."
+  },
+  {
+   "fieldname": "details_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nSubmitted\nAwarded\nCancelled",
+   "default": "Draft",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "revision",
+   "fieldtype": "Int",
+   "label": "Revision",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "awarded_on",
+   "fieldtype": "Datetime",
+   "label": "Awarded On",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Quotation",
+   "options": "Quotation",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "crm_deal",
+   "fieldtype": "Data",
+   "label": "CRM Deal",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "size_section",
+   "fieldtype": "Section Break",
+   "label": "Plant and Template"
+  },
+  {
+   "fieldname": "template",
+   "fieldtype": "Link",
+   "label": "Template",
+   "options": "FC BOQ Template"
+  },
+  {
+   "fieldname": "capacity_kwp",
+   "fieldtype": "Float",
+   "label": "PV Capacity (kWp)"
+  },
+  {
+   "fieldname": "storage_kwh",
+   "fieldtype": "Float",
+   "label": "Storage (kWh)"
+  },
+  {
+   "fieldname": "size_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "Completion / COD"
+  },
+  {
+   "fieldname": "practical_completion_date",
+   "fieldtype": "Date",
+   "label": "Practical Completion",
+   "allow_on_submit": 1,
+   "no_copy": 1,
+   "description": "Starts the client's retention release clock."
+  },
+  {
+   "fieldname": "items_tab",
+   "fieldtype": "Tab Break",
+   "label": "Bill of Quantities"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Lines",
+   "options": "FC BOQ Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price_section",
+   "fieldtype": "Section Break",
+   "label": "Price"
+  },
+  {
+   "fieldname": "markup_percent",
+   "fieldtype": "Percent",
+   "label": "Margin on Cost"
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Budget (Cost)",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "price_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contract_value",
+   "fieldtype": "Currency",
+   "label": "Contract Value",
+   "options": "currency",
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "gross_margin",
+   "fieldtype": "Currency",
+   "label": "Gross Margin",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gross_margin_percent",
+   "fieldtype": "Percent",
+   "label": "Margin on Sell",
+   "read_only": 1
+  },
+  {
+   "fieldname": "by_type_section",
+   "fieldtype": "Section Break",
+   "label": "Cost by Type",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "material_cost",
+   "fieldtype": "Currency",
+   "label": "Material",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "labour_cost",
+   "fieldtype": "Currency",
+   "label": "Labour",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "plant_cost",
+   "fieldtype": "Currency",
+   "label": "Plant",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "by_type_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subcontract_cost",
+   "fieldtype": "Currency",
+   "label": "Subcontract",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "overhead_cost",
+   "fieldtype": "Currency",
+   "label": "Overhead",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sections_section",
+   "fieldtype": "Section Break",
+   "label": "Sections and Programme",
+   "description": "One row per section, kept in step with the lines. Award opens a task per row, on these dates. They are the baseline planned value is measured against."
+  },
+  {
+   "fieldname": "sections",
+   "fieldtype": "Table",
+   "label": "Sections",
+   "options": "FC BOQ Section",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "client_tab",
+   "fieldtype": "Tab Break",
+   "label": "Client Terms",
+   "depends_on": "eval:doc.contract_model=='EPC'"
+  },
+  {
+   "fieldname": "billing_basis",
+   "fieldtype": "Select",
+   "label": "Bill the Client By",
+   "options": "Measured Valuation\nMilestones",
+   "default": "Measured Valuation"
+  },
+  {
+   "fieldname": "payment_terms_days",
+   "fieldtype": "Int",
+   "label": "Payment Terms (days)"
+  },
+  {
+   "fieldname": "client_advance_percent",
+   "fieldtype": "Percent",
+   "label": "Advance"
+  },
+  {
+   "fieldname": "client_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_retention_percent",
+   "fieldtype": "Percent",
+   "label": "Retention"
+  },
+  {
+   "fieldname": "client_retention_cap_percent",
+   "fieldtype": "Percent",
+   "label": "Retention Cap (% of contract)"
+  },
+  {
+   "fieldname": "dlp_months",
+   "fieldtype": "Int",
+   "label": "Defects Liability (months)"
+  },
+  {
+   "fieldname": "client_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ld_percent_per_week",
+   "fieldtype": "Percent",
+   "label": "Delay Damages per Week"
+  },
+  {
+   "fieldname": "ld_cap_percent",
+   "fieldtype": "Percent",
+   "label": "Delay Damages Cap"
+  },
+  {
+   "fieldname": "client_position_section",
+   "fieldtype": "Section Break",
+   "label": "Position with the Client"
+  },
+  {
+   "fieldname": "valued_to_date",
+   "fieldtype": "Currency",
+   "label": "Valued to Date",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "client_advance_invoiced",
+   "fieldtype": "Currency",
+   "label": "Advance Invoiced",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "client_advance_recovered",
+   "fieldtype": "Currency",
+   "label": "Advance Recovered",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "client_position_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_retention_held",
+   "fieldtype": "Currency",
+   "label": "Retention Held by Client",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "client_retention_released",
+   "fieldtype": "Currency",
+   "label": "Retention Released",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "milestones_section",
+   "fieldtype": "Section Break",
+   "label": "Billing Milestones",
+   "depends_on": "eval:doc.billing_basis=='Milestones'"
+  },
+  {
+   "fieldname": "milestones",
+   "fieldtype": "Table",
+   "label": "Milestones",
+   "options": "FC Billing Milestone",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "client_stages_section",
+   "fieldtype": "Section Break",
+   "label": "Client Retention Release"
+  },
+  {
+   "fieldname": "client_release_stages",
+   "fieldtype": "Table",
+   "label": "Release Stages",
+   "options": "FC Retention Release Stage",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "intacct_tab",
+   "fieldtype": "Tab Break",
+   "label": "Intacct"
+  },
+  {
+   "fieldname": "intacct_section",
+   "fieldtype": "Section Break",
+   "description": "Filled when the award opens the project in Intacct. Empty while posting is switched off."
+  },
+  {
+   "fieldname": "intacct_project_id",
+   "fieldtype": "Data",
+   "label": "Intacct Project ID",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "intacct_project_recordno",
+   "fieldtype": "Data",
+   "label": "Intacct RECORDNO",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "FC BOQ",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC BOQ",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  },
+  {
+   "role": "Purchase Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts User",
+   "read": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "is_submittable": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "title_field": "title",
+ "show_title_field_in_link": 1,
+ "search_fields": "title,project_key,customer",
+ "track_changes": 1
+}

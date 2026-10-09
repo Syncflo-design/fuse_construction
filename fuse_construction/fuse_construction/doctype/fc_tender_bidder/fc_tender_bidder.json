@@ -1,0 +1,143 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "supplier",
+  "supplier_name",
+  "contact_email",
+  "bid_status",
+  "bid_amount",
+  "programme_weeks",
+  "technically_compliant",
+  "bid_date",
+  "compliance_col",
+  "tax_clearance_valid",
+  "bee_level",
+  "insurance_valid",
+  "coida_valid",
+  "quote",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Bidder",
+   "options": "Supplier",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "fetch_from": "supplier.supplier_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "fetch_from": "supplier.email_id",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "bid_status",
+   "fieldtype": "Select",
+   "label": "Bid Status",
+   "options": "Invited\nDeclined\nBid Received\nShortlisted\nAwarded\nNot Awarded",
+   "default": "Invited",
+   "in_list_view": 1,
+   "columns": 2,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "bid_amount",
+   "fieldtype": "Currency",
+   "label": "Bid Amount",
+   "in_list_view": 1,
+   "columns": 2,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "programme_weeks",
+   "fieldtype": "Int",
+   "label": "Programme (weeks)",
+   "in_list_view": 1,
+   "columns": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "technically_compliant",
+   "fieldtype": "Check",
+   "label": "Compliant",
+   "in_list_view": 1,
+   "columns": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "bid_date",
+   "fieldtype": "Date",
+   "label": "Bid Received On",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "compliance_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tax_clearance_valid",
+   "fieldtype": "Check",
+   "label": "Tax Clearance Valid",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "bee_level",
+   "fieldtype": "Data",
+   "label": "B-BBEE Level",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "insurance_valid",
+   "fieldtype": "Check",
+   "label": "Insurance Valid",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "coida_valid",
+   "fieldtype": "Check",
+   "label": "COIDA Good Standing",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "quote",
+   "fieldtype": "Attach",
+   "label": "Quote",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks",
+   "allow_on_submit": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Tender Bidder",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

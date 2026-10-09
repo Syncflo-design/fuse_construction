@@ -1,0 +1,172 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "boq_group",
+  "cost_code",
+  "description",
+  "qty_basis",
+  "qty_factor",
+  "uom",
+  "rate",
+  "detail_section",
+  "item_type",
+  "phase",
+  "cost_head",
+  "detail_col",
+  "item_code",
+  "preferred_supplier",
+  "build_up_section",
+  "labour_rate",
+  "plant_rate",
+  "build_up_col",
+  "material_rate",
+  "subcontract_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "boq_group",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "FC BOQ Group",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "cost_code",
+   "fieldtype": "Data",
+   "label": "Cost Code",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "qty_basis",
+   "fieldtype": "Select",
+   "label": "Qty Basis",
+   "options": "Fixed\nPer kWp\nPer MWp\nPer kWh\nPer MWh",
+   "default": "Fixed",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "qty_factor",
+   "fieldtype": "Float",
+   "label": "Qty / Factor",
+   "in_list_view": 1,
+   "columns": 1,
+   "description": "Fixed: the quantity. Per kWp, MWp, kWh or MWh: the quantity for one unit of size."
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Unit",
+   "options": "UOM",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Cost Rate",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "detail_section",
+   "fieldtype": "Section Break",
+   "label": "Detail",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "item_type",
+   "fieldtype": "Select",
+   "label": "Cost Type",
+   "options": "Material\nLabour\nPlant\nSubcontract\nOverhead",
+   "default": "Material"
+  },
+  {
+   "fieldname": "phase",
+   "fieldtype": "Select",
+   "label": "Phase",
+   "options": "\nDesign\nProcurement\nConstruction\nCommissioning\nHandover"
+  },
+  {
+   "fieldname": "cost_head",
+   "fieldtype": "Link",
+   "label": "Cost Head",
+   "options": "FC Cost Head"
+  },
+  {
+   "fieldname": "detail_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "preferred_supplier",
+   "fieldtype": "Link",
+   "label": "Preferred Supplier",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "build_up_section",
+   "fieldtype": "Section Break",
+   "label": "Rate Build-up",
+   "collapsible": 1,
+   "description": "Filled in, these add up to the rate."
+  },
+  {
+   "fieldname": "labour_rate",
+   "fieldtype": "Currency",
+   "label": "Labour"
+  },
+  {
+   "fieldname": "plant_rate",
+   "fieldtype": "Currency",
+   "label": "Plant"
+  },
+  {
+   "fieldname": "build_up_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "material_rate",
+   "fieldtype": "Currency",
+   "label": "Material"
+  },
+  {
+   "fieldname": "subcontract_rate",
+   "fieldtype": "Currency",
+   "label": "Subcontract"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC BOQ Template Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

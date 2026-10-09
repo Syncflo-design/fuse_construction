@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "stage_name",
+  "share_percent",
+  "trigger",
+  "months_after",
+  "task",
+  "fixed_date",
+  "due_date",
+  "status",
+  "released_amount",
+  "retention_release"
+ ],
+ "fields": [
+  {
+   "fieldname": "stage_name",
+   "fieldtype": "Data",
+   "label": "Stage",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "share_percent",
+   "fieldtype": "Percent",
+   "label": "Share of Retention",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "trigger",
+   "fieldtype": "Select",
+   "label": "Falls Due",
+   "options": "Practical Completion\nMonths after Practical Completion\nTask Completed\nFixed Date",
+   "default": "Practical Completion",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "months_after",
+   "fieldtype": "Int",
+   "label": "Months after PC",
+   "depends_on": "eval:doc.trigger=='Months after Practical Completion'"
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "Task",
+   "options": "Task",
+   "depends_on": "eval:doc.trigger=='Task Completed'"
+  },
+  {
+   "fieldname": "fixed_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "depends_on": "eval:doc.trigger=='Fixed Date'"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due",
+   "in_list_view": 1,
+   "columns": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nDue\nReleased",
+   "default": "Pending",
+   "in_list_view": 1,
+   "columns": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "released_amount",
+   "fieldtype": "Currency",
+   "label": "Released",
+   "in_list_view": 1,
+   "columns": 2,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "retention_release",
+   "fieldtype": "Link",
+   "label": "Release",
+   "options": "FC Retention Release",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Retention Release Stage",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1
+}

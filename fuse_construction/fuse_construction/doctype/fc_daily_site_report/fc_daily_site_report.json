@@ -1,0 +1,302 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "report_date",
+  "project",
+  "reported_by",
+  "reported_by_name",
+  "company",
+  "head_col_1",
+  "weather",
+  "temperature_c",
+  "site_condition",
+  "head_col_2",
+  "labour_count",
+  "lost_hours",
+  "activities_section",
+  "activities",
+  "plant_section",
+  "plant",
+  "materials_section",
+  "materials",
+  "issues_section",
+  "issues",
+  "safety",
+  "issues_col",
+  "instructions",
+  "visitors",
+  "photos_section",
+  "photos",
+  "signoff_section",
+  "signature",
+  "signoff_col",
+  "signed_by",
+  "signed_on",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "FC-DSR-.YYYY.-.####",
+   "reqd": 1,
+   "default": "FC-DSR-.YYYY.-.####",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "report_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "reported_by",
+   "fieldtype": "Link",
+   "label": "Reported By",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "reported_by_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "fetch_from": "reported_by.employee_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "fetch_from": "project.company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "head_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weather",
+   "fieldtype": "Select",
+   "label": "Weather",
+   "options": "\nClear\nPartly Cloudy\nOvercast\nRain\nHeavy Rain\nWind\nStorm\nExtreme Heat",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "temperature_c",
+   "fieldtype": "Float",
+   "label": "Temperature (°C)"
+  },
+  {
+   "fieldname": "site_condition",
+   "fieldtype": "Select",
+   "label": "Site",
+   "options": "\nWorkable\nPartly Workable\nNot Workable"
+  },
+  {
+   "fieldname": "head_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "labour_count",
+   "fieldtype": "Int",
+   "label": "Labour on Site",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "lost_hours",
+   "fieldtype": "Float",
+   "label": "Hours Lost to Weather or Delays"
+  },
+  {
+   "fieldname": "activities_section",
+   "fieldtype": "Section Break",
+   "label": "Work Done"
+  },
+  {
+   "fieldname": "activities",
+   "fieldtype": "Table",
+   "label": "Activities",
+   "options": "FC Site Activity"
+  },
+  {
+   "fieldname": "plant_section",
+   "fieldtype": "Section Break",
+   "label": "Plant on Site",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Table",
+   "label": "Plant",
+   "options": "FC Site Plant"
+  },
+  {
+   "fieldname": "materials_section",
+   "fieldtype": "Section Break",
+   "label": "Materials",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "materials",
+   "fieldtype": "Table",
+   "label": "Materials",
+   "options": "FC Site Material"
+  },
+  {
+   "fieldname": "issues_section",
+   "fieldtype": "Section Break",
+   "label": "Issues"
+  },
+  {
+   "fieldname": "issues",
+   "fieldtype": "Small Text",
+   "label": "Issues and Delays"
+  },
+  {
+   "fieldname": "safety",
+   "fieldtype": "Small Text",
+   "label": "Safety and Incidents"
+  },
+  {
+   "fieldname": "issues_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "instructions",
+   "fieldtype": "Small Text",
+   "label": "Instructions Received"
+  },
+  {
+   "fieldname": "visitors",
+   "fieldtype": "Small Text",
+   "label": "Visitors"
+  },
+  {
+   "fieldname": "photos_section",
+   "fieldtype": "Section Break",
+   "label": "Photos"
+  },
+  {
+   "fieldname": "photos",
+   "fieldtype": "Table",
+   "label": "Photos",
+   "options": "FC Site Photo"
+  },
+  {
+   "fieldname": "signoff_section",
+   "fieldtype": "Section Break",
+   "label": "Sign-off"
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "fieldname": "signoff_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "signed_by",
+   "fieldtype": "Link",
+   "label": "Signed By",
+   "options": "User",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "signed_on",
+   "fieldtype": "Datetime",
+   "label": "Signed On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "options": "FC Daily Site Report",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Daily Site Report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1
+  },
+  {
+   "role": "Projects User",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1,
+   "report": 1,
+   "print": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "is_submittable": 1,
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "track_changes": 1
+}

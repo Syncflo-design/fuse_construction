@@ -1,0 +1,362 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "defaults_section",
+  "default_company",
+  "project_code_series",
+  "boq_markup_percent",
+  "payment_terms_days",
+  "defaults_col_1",
+  "sub_retention_percent",
+  "sub_retention_cap_percent",
+  "sub_advance_percent",
+  "sub_advance_recovery_percent",
+  "defaults_col_2",
+  "client_retention_percent",
+  "client_retention_cap_percent",
+  "client_advance_percent",
+  "dlp_months",
+  "stages_section",
+  "default_release_stages",
+  "labour_section",
+  "default_activity_type",
+  "day_start_time",
+  "standard_day_hours",
+  "labour_col_1",
+  "auto_overtime",
+  "overtime_multiplier",
+  "sunday_multiplier",
+  "labour_col_2",
+  "approver_role",
+  "require_daily_report_photo",
+  "stores_section",
+  "site_warehouse",
+  "create_subcontract_purchase_order",
+  "stores_col",
+  "subcontract_item",
+  "quotation_item",
+  "notify_section",
+  "retention_notify_role",
+  "retention_notice_days",
+  "intacct_section",
+  "post_to_intacct",
+  "subcontract_cost_account",
+  "retention_payable_account",
+  "subcontract_advance_account",
+  "intacct_col",
+  "revenue_account",
+  "retention_receivable_account",
+  "client_advance_account"
+ ],
+ "fields": [
+  {
+   "fieldname": "defaults_section",
+   "fieldtype": "Section Break",
+   "label": "Commercial Defaults",
+   "description": "Starting values for new BOQs and subcontracts. Each document keeps its own copy, so changing these never alters a contract already agreed."
+  },
+  {
+   "fieldname": "default_company",
+   "fieldtype": "Link",
+   "label": "Default Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "project_code_series",
+   "fieldtype": "Data",
+   "label": "Project Code Series",
+   "default": "FCP-.#####",
+   "description": "Used when a BOQ is created without a project code — from a won CRM deal, for example. Where Intacct numbers projects, set the code it will use instead."
+  },
+  {
+   "fieldname": "boq_markup_percent",
+   "fieldtype": "Percent",
+   "label": "Margin on Cost",
+   "default": "15"
+  },
+  {
+   "fieldname": "payment_terms_days",
+   "fieldtype": "Int",
+   "label": "Payment Terms (days)",
+   "default": "30"
+  },
+  {
+   "fieldname": "defaults_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sub_retention_percent",
+   "fieldtype": "Percent",
+   "label": "Subcontract Retention",
+   "default": "5"
+  },
+  {
+   "fieldname": "sub_retention_cap_percent",
+   "fieldtype": "Percent",
+   "label": "Subcontract Retention Cap (% of value)",
+   "default": "5",
+   "description": "0 means no cap."
+  },
+  {
+   "fieldname": "sub_advance_percent",
+   "fieldtype": "Percent",
+   "label": "Subcontract Advance",
+   "default": "0"
+  },
+  {
+   "fieldname": "sub_advance_recovery_percent",
+   "fieldtype": "Percent",
+   "label": "Advance Recovered per Certificate (% of gross)",
+   "default": "20"
+  },
+  {
+   "fieldname": "defaults_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_retention_percent",
+   "fieldtype": "Percent",
+   "label": "Client Retention",
+   "default": "5"
+  },
+  {
+   "fieldname": "client_retention_cap_percent",
+   "fieldtype": "Percent",
+   "label": "Client Retention Cap (% of contract)",
+   "default": "5",
+   "description": "0 means no cap."
+  },
+  {
+   "fieldname": "client_advance_percent",
+   "fieldtype": "Percent",
+   "label": "Client Advance",
+   "default": "0"
+  },
+  {
+   "fieldname": "dlp_months",
+   "fieldtype": "Int",
+   "label": "Defects Liability Period (months)",
+   "default": "12"
+  },
+  {
+   "fieldname": "stages_section",
+   "fieldtype": "Section Break",
+   "label": "Default Retention Release Stages",
+   "description": "Copied onto every new subcontract and EPC BOQ. Shares must add up to 100%."
+  },
+  {
+   "fieldname": "default_release_stages",
+   "fieldtype": "Table",
+   "label": "Release Stages",
+   "options": "FC Retention Release Stage"
+  },
+  {
+   "fieldname": "labour_section",
+   "fieldtype": "Section Break",
+   "label": "Site Labour"
+  },
+  {
+   "fieldname": "default_activity_type",
+   "fieldtype": "Link",
+   "label": "Default Activity Type",
+   "options": "Activity Type",
+   "description": "The trade a crew row books under when the foreman does not choose one. Its costing rate is the fallback when a worker has no Activity Cost of their own."
+  },
+  {
+   "fieldname": "day_start_time",
+   "fieldtype": "Time",
+   "label": "Working Day Starts",
+   "default": "07:00:00"
+  },
+  {
+   "fieldname": "standard_day_hours",
+   "fieldtype": "Float",
+   "label": "Standard Day (hours)",
+   "default": "8"
+  },
+  {
+   "fieldname": "labour_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auto_overtime",
+   "fieldtype": "Check",
+   "label": "Hours Beyond the Standard Day Are Overtime",
+   "default": "1"
+  },
+  {
+   "fieldname": "overtime_multiplier",
+   "fieldtype": "Float",
+   "label": "Overtime Cost Multiplier",
+   "default": "1.5"
+  },
+  {
+   "fieldname": "sunday_multiplier",
+   "fieldtype": "Float",
+   "label": "Sunday Cost Multiplier",
+   "default": "2",
+   "description": "Every hour worked on a Sunday is costed at this multiple. 0 or 1 switches it off."
+  },
+  {
+   "fieldname": "labour_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approver_role",
+   "fieldtype": "Link",
+   "label": "Time Approver Role",
+   "options": "Role",
+   "default": "Projects Manager",
+   "description": "Who may approve crew time on the phone or the desk."
+  },
+  {
+   "fieldname": "require_daily_report_photo",
+   "fieldtype": "Check",
+   "label": "Daily Report Needs a Photo",
+   "default": "0"
+  },
+  {
+   "fieldname": "stores_section",
+   "fieldtype": "Section Break",
+   "label": "Buying and Stores"
+  },
+  {
+   "fieldname": "site_warehouse",
+   "fieldtype": "Link",
+   "label": "Site Warehouse",
+   "options": "Warehouse",
+   "description": "Where material requests from site are raised for."
+  },
+  {
+   "fieldname": "create_subcontract_purchase_order",
+   "fieldtype": "Check",
+   "label": "Raise a Purchase Order for Each Subcontract",
+   "default": "1"
+  },
+  {
+   "fieldname": "stores_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subcontract_item",
+   "fieldtype": "Link",
+   "label": "Subcontract Item",
+   "options": "Item",
+   "description": "Non-stock service item the subcontract purchase order is raised on."
+  },
+  {
+   "fieldname": "quotation_item",
+   "fieldtype": "Link",
+   "label": "Quotation Item",
+   "options": "Item",
+   "description": "Non-stock sales item a quotation from a BOQ is priced on."
+  },
+  {
+   "fieldname": "notify_section",
+   "fieldtype": "Section Break",
+   "label": "Notifications"
+  },
+  {
+   "fieldname": "retention_notify_role",
+   "fieldtype": "Link",
+   "label": "Retention Reminder Role",
+   "options": "Role",
+   "default": "Projects Manager"
+  },
+  {
+   "fieldname": "retention_notice_days",
+   "fieldtype": "Int",
+   "label": "Remind This Many Days Before a Release Falls Due",
+   "default": "14"
+  },
+  {
+   "fieldname": "intacct_section",
+   "fieldtype": "Section Break",
+   "label": "Sage Intacct",
+   "collapsible": 1,
+   "description": "Intacct is the ledger. With posting OFF, every construction document stays in Fuse and no call is made to Intacct. Switch it on only once every account below is set and the shapes have been proved on a test company."
+  },
+  {
+   "fieldname": "post_to_intacct",
+   "fieldtype": "Check",
+   "label": "Post Construction Documents to Intacct",
+   "default": "0"
+  },
+  {
+   "fieldname": "subcontract_cost_account",
+   "fieldtype": "Data",
+   "label": "Subcontract Cost Account"
+  },
+  {
+   "fieldname": "retention_payable_account",
+   "fieldtype": "Data",
+   "label": "Retention Payable Account"
+  },
+  {
+   "fieldname": "subcontract_advance_account",
+   "fieldtype": "Data",
+   "label": "Subcontractor Advances Account"
+  },
+  {
+   "fieldname": "intacct_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_account",
+   "fieldtype": "Data",
+   "label": "Contract Revenue Account"
+  },
+  {
+   "fieldname": "retention_receivable_account",
+   "fieldtype": "Data",
+   "label": "Retention Receivable Account"
+  },
+  {
+   "fieldname": "client_advance_account",
+   "fieldtype": "Data",
+   "label": "Client Advances Account"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Projects Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "print": 1
+  },
+  {
+   "role": "Projects User",
+   "read": 1
+  },
+  {
+   "role": "Accounts Manager",
+   "read": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "issingle": 1,
+ "track_changes": 1
+}

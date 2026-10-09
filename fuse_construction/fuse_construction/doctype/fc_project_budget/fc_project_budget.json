@@ -1,0 +1,293 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-08 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "project",
+  "project_name",
+  "boq",
+  "company",
+  "head_col",
+  "health",
+  "schedule_status",
+  "last_refreshed",
+  "budget_section",
+  "contract_value",
+  "original_budget",
+  "approved_revisions",
+  "current_budget",
+  "budget_col",
+  "committed",
+  "actual_cost",
+  "uncommitted",
+  "percent_spent",
+  "evm_section",
+  "percent_complete",
+  "earned_value",
+  "planned_value",
+  "evm_col_1",
+  "cpi",
+  "spi",
+  "evm_col_2",
+  "eac",
+  "etc_amount",
+  "vac",
+  "items_section",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "fetch_from": "project.project_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq",
+   "fieldtype": "Link",
+   "label": "BOQ",
+   "options": "FC BOQ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "head_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "health",
+   "fieldtype": "Select",
+   "label": "Health",
+   "options": "\nGreen\nAmber\nRed",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "schedule_status",
+   "fieldtype": "Select",
+   "label": "Schedule",
+   "options": "\nOn Track\nDelayed\nSeverely Delayed\nCompleted",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_refreshed",
+   "fieldtype": "Datetime",
+   "label": "Last Refreshed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "budget_section",
+   "fieldtype": "Section Break",
+   "label": "Budget"
+  },
+  {
+   "fieldname": "contract_value",
+   "fieldtype": "Currency",
+   "label": "Contract Value",
+   "read_only": 1
+  },
+  {
+   "fieldname": "original_budget",
+   "fieldtype": "Currency",
+   "label": "Original Budget",
+   "description": "The awarded BOQ's cost.",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approved_revisions",
+   "fieldtype": "Currency",
+   "label": "Approved Revisions",
+   "read_only": 1
+  },
+  {
+   "fieldname": "current_budget",
+   "fieldtype": "Currency",
+   "label": "Budget at Completion (BAC)",
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "budget_col",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "committed",
+   "fieldtype": "Currency",
+   "label": "Committed",
+   "in_list_view": 1,
+   "description": "Open purchase orders, and subcontract value not yet certified.",
+   "read_only": 1
+  },
+  {
+   "fieldname": "actual_cost",
+   "fieldtype": "Currency",
+   "label": "Actual Cost",
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "uncommitted",
+   "fieldtype": "Currency",
+   "label": "Uncommitted Budget",
+   "read_only": 1
+  },
+  {
+   "fieldname": "percent_spent",
+   "fieldtype": "Percent",
+   "label": "Spent + Committed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evm_section",
+   "fieldtype": "Section Break",
+   "label": "Earned Value"
+  },
+  {
+   "fieldname": "percent_complete",
+   "fieldtype": "Percent",
+   "label": "% Complete",
+   "read_only": 1
+  },
+  {
+   "fieldname": "earned_value",
+   "fieldtype": "Currency",
+   "label": "Earned Value (EV)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "planned_value",
+   "fieldtype": "Currency",
+   "label": "Planned Value (PV)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evm_col_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cpi",
+   "fieldtype": "Float",
+   "label": "CPI",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "spi",
+   "fieldtype": "Float",
+   "label": "SPI",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evm_col_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "eac",
+   "fieldtype": "Currency",
+   "label": "Forecast at Completion (EAC)",
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "etc_amount",
+   "fieldtype": "Currency",
+   "label": "Estimate to Complete",
+   "read_only": 1
+  },
+  {
+   "fieldname": "vac",
+   "fieldtype": "Currency",
+   "label": "Variance at Completion",
+   "read_only": 1
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break",
+   "label": "By Section"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Sections",
+   "options": "FC Project Budget Item",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-08 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fuse Construction",
+ "name": "FC Project Budget",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "Projects Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  },
+  {
+   "role": "Projects User",
+   "read": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts User",
+   "read": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "Accounts Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "format:FCB-{project}",
+ "naming_rule": "Expression",
+ "title_field": "project_name",
+ "track_changes": 0
+}
