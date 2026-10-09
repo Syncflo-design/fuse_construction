@@ -111,6 +111,60 @@ BOQ_GROUPS = [
 
 WORKFLOW = "FC Subcontract Certificate Approval"
 
+# The deal page's own buttons in Frappe CRM: ask for a price, then quote it (crm.py). A CRM
+# Form Script is CRM's way to add actions to its screens; this one is rewritten from here on
+# every update, so change it here, not in the desk.
+CRM_FORM_SCRIPT = "Fuse Construction Deal"
+CRM_DEAL_SCRIPT = """// Fuse Construction: price this deal, then quote it. Installed by fuse_construction;
+// edits made here are overwritten on its next update.
+class CRMDeal {
+	onLoad() {
+		const fail = (e) =>
+			toast.error((e && ((e.messages && e.messages[0]) || e.message)) || "That did not work.");
+		this.actions = [
+			{
+				label: "Price this deal",
+				icon: "dollar-sign",
+				onClick: () =>
+					call("fuse_construction.crm.price_deal", { deal: this.doc.name }).then((r) => {
+						toast.success("BOQ " + r.boq + " is with the estimator");
+						if (r.can_open) window.open(r.url, "_blank");
+					}, fail),
+			},
+			{
+				label: "Quote this deal",
+				icon: "file-text",
+				onClick: () =>
+					call("fuse_construction.crm.quote_deal", { deal: this.doc.name }).then((r) => {
+						toast.success("Quotation " + r.quotation + " drafted");
+						window.open(r.url, "_blank");
+					}, fail),
+			},
+		];
+	}
+}
+"""
+
+
+def _crm_form_script():
+	"""The deal page's buttons, on a site with Frappe CRM."""
+	if not frappe.db.exists("DocType", "CRM Form Script"):
+		return None
+	if frappe.db.exists("CRM Form Script", CRM_FORM_SCRIPT):
+		doc = frappe.get_doc("CRM Form Script", CRM_FORM_SCRIPT)
+	else:
+		doc = frappe.new_doc("CRM Form Script")
+	doc.dt = "CRM Deal"
+	doc.view = "Form"
+	doc.enabled = 1
+	doc.script = CRM_DEAL_SCRIPT
+	doc.flags.ignore_permissions = True
+	if doc.is_new():
+		doc.insert(ignore_permissions=True, set_name=CRM_FORM_SCRIPT)
+	else:
+		doc.save(ignore_permissions=True)
+	return doc.name
+
 
 def after_install():
 	"""Put this app's configuration in step with this version of it."""
@@ -118,6 +172,7 @@ def after_install():
 	crm = False
 	if frappe.db.exists("DocType", "CRM Deal"):
 		create_custom_fields(CRM_FIELDS, ignore_validate=True)
+		_crm_form_script()
 		crm = True
 	seeded = {
 		"cost_heads": _seed_tree("FC Cost Head", "cost_head_name", [(n, {"item_type": t}) for n, t in COST_HEADS]),

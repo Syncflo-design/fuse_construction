@@ -39,6 +39,7 @@
   "stores_col",
   "subcontract_item",
   "quotation_item",
+  "won_deal_customer_group",
   "notify_section",
   "retention_notify_role",
   "retention_notice_days",
@@ -254,6 +255,13 @@
    "label": "Quotation Item",
    "options": "Item",
    "description": "Non-stock sales item a quotation from a BOQ is priced on."
+  },
+  {
+   "fieldname": "won_deal_customer_group",
+   "fieldtype": "Link",
+   "options": "Customer Group",
+   "label": "Customer Group for Won Deals",
+   "description": "Where a client created from a won CRM deal is filed. Blank: the Selling Settings default."
   },
   {
    "fieldname": "notify_section",

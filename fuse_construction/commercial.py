@@ -86,6 +86,8 @@ def award(doc, ignore_permissions=False):
 		frappe.throw(f"{doc.name} is already awarded, to {doc.project}.")
 	if not doc.sections:
 		frappe.throw("This BOQ has no priced sections to open as tasks.")
+	if doc.contract_model == "EPC" and not doc.customer:
+		frappe.throw("Set the client before awarding. A CRM deal's client is set when the deal is won.")
 
 	intacct = None
 	if settings.intacct_posting_on():
@@ -236,15 +238,33 @@ def make_quotation(boq, by="Section"):
 	"""
 	doc = frappe.get_doc("FC BOQ", boq)
 	doc.check_permission("read")
-	if doc.contract_model != "EPC" or not doc.customer:
-		frappe.throw("A quotation goes to a client. This is not an EPC job with a client.")
+	return quotation_for(doc, by)
+
+
+def quotation_for(doc, by="Section"):
+	"""The quotation itself, addressed to the client — or, while the job is still a CRM deal
+	with no client yet, to the deal. Frappe CRM lists a deal's quotations, and moves a draft
+	onto the client when the deal is won (crm.py)."""
+	if doc.contract_model != "EPC":
+		frappe.throw("A quotation goes to a client. An IPP plant is the company's own.")
+	if doc.customer:
+		quotation_to, party = "Customer", doc.customer
+	elif doc.get("crm_deal") and frappe.db.exists("DocType", "CRM Deal") and frappe.db.exists("CRM Deal", doc.crm_deal):
+		quotation_to, party = "CRM Deal", doc.crm_deal
+	else:
+		frappe.throw("A quotation goes to a client, or to the CRM deal it is for. This BOQ has neither.")
 	item_code = settings.get("quotation_item")
 	if not item_code:
 		frappe.throw("Choose the Quotation Item in FC Settings — the non-stock sales item a quotation is priced on.")
 
 	quotation = frappe.new_doc("Quotation")
-	quotation.quotation_to = "Customer"
-	quotation.party_name = doc.customer
+	quotation.quotation_to = quotation_to
+	quotation.party_name = party
+	if quotation_to == "CRM Deal":
+		# ERPNext names only its own party types; on a deal the name to print is the BOQ's.
+		quotation.customer_name = doc.title
+		if frappe.get_meta("Quotation").has_field("crm_deal"):
+			quotation.crm_deal = doc.crm_deal
 	quotation.company = doc.company
 	quotation.transaction_date = nowdate()
 	quotation.valid_till = add_days(nowdate(), 30)

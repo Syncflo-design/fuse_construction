@@ -45,7 +45,9 @@ class FCBOQ(Document):
 
 	def validate(self):
 		self.project_key = (self.project_key or "").strip()
-		if self.contract_model == "EPC" and not self.customer:
+		# A BOQ priced for a CRM deal has no client yet — the prospect becomes one when the deal
+		# is won (crm.py), and award will not go ahead without one.
+		if self.contract_model == "EPC" and not self.customer and not self.get("crm_deal"):
 			frappe.throw("An EPC job is billed to a client. Choose the client.")
 		self._check_code()
 		self._check_project()
