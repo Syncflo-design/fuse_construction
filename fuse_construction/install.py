@@ -323,9 +323,11 @@ def _shortcuts():
 	"""(module, band, shortcut). The bands are the desk's three rows: the jobs, the money,
 	the site. Labels must match registry.DESK_TILES."""
 	return [
+		# The jobs themselves, first: open one and its Construction menu leads to its dashboard,
+		# BOQ and the rest. Only projects a BOQ was awarded to — the construction jobs.
+		("fc_boq_budget", "Jobs", {"label": "Projects", **_counted(
+			"Project", {"status": "Open", "fc_boq": ["is", "set"]}, "open", "Blue")}),
 		("fc_boq_budget", "Jobs", {"label": "Project Shape", "type": "Report", "link_to": "FC Project Shape",
-			"color": "Blue"}),
-		("fc_boq_budget", "Jobs", {"label": "Dashboard", "type": "Page", "link_to": "fc-project-dashboard",
 			"color": "Blue"}),
 		("fc_boq_budget", "Jobs", {"label": "BOQs", **_counted(
 			"FC BOQ", {"status": ["in", ["Draft", "Submitted"]]}, "not awarded", "Blue")}),
@@ -371,6 +373,7 @@ def _cards():
 		]),
 		("fc_boq_budget", "Jobs", "Cost Control", [
 			_report("Project Shape", "FC Project Shape"),
+			{"type": "Link", "label": "Job Dashboard", "link_type": "Page", "link_to": "fc-project-dashboard"},
 			_doc("Project Budget", "FC Project Budget"),
 			_doc("Budget Revision", "FC Budget Revision"),
 			_report("Cash Flow Forecast", "FC Cash Flow Forecast"),

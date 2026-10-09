@@ -68,10 +68,7 @@ WORKSPACE = "Fuse Construction"
 
 # Lucide icons, inner SVG only — fuse_theme wraps them.
 CHART = '<path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path>'
-DASHBOARD = (
-	'<rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect>'
-	'<rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect>'
-)
+BRIEFCASE = '<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect>'
 CALCULATOR = (
 	'<rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line>'
 	'<line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path>'
@@ -115,8 +112,8 @@ FOLDER = (
 # Keyed by the shortcut LABEL in install._shortcuts — rename one, rename both. A label
 # with no entry here still works; it is drawn as a plain Frappe shortcut.
 DESK_TILES = {
+	"Projects": {"svg": BRIEFCASE, "blurb": "Every job: its file, dashboard and BOQ"},
 	"Project Shape": {"svg": CHART, "blurb": "Budget, spend and forecast, all jobs"},
-	"Dashboard": {"svg": DASHBOARD, "blurb": "One job's cost, programme and curve"},
 	"BOQs": {"svg": CALCULATOR, "blurb": "Estimate, price and award jobs"},
 	"Tenders": {"svg": GAVEL, "blurb": "Packages out to bidders"},
 	"Subcontracts": {"svg": HANDSHAKE, "blurb": "Orders and running accounts"},
