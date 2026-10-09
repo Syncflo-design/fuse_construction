@@ -250,30 +250,47 @@ def _sync_switches():
 # The Construction workspace
 # ──────────────────────────────────────────────────────────────────────────────
 
-WORKSPACE = "Fuse Construction"
+# A construction login's desk: its default workspace. The name lives in registry.py, which
+# also says how fuse_theme draws each shortcut (icon and description, keyed by label).
+WORKSPACE = registry.WORKSPACE
+
+
+def _counted(doctype, filters, words, color):
+	"""A shortcut counting what is WAITING, not every record: "1 to approve", not "6".
+
+	Frappe draws the count in the shortcut's colour, and grey when it is nothing.
+	"""
+	return {"type": "DocType", "link_to": doctype, "stats_filter": json.dumps(filters),
+		"format": "{} " + words, "color": color}
 
 
 def _shortcuts():
+	"""(module, band, shortcut). The bands are the desk's three rows: the jobs, the money,
+	the site. Labels must match registry.DESK_TILES."""
 	return [
-		("fc_boq_budget", {"label": "BOQs", "type": "DocType", "link_to": "FC BOQ", "color": "Green"}),
-		("fc_boq_budget", {"label": "Project Shape", "type": "Report", "link_to": "FC Project Shape",
+		("fc_boq_budget", "Jobs", {"label": "Project Shape", "type": "Report", "link_to": "FC Project Shape",
 			"color": "Blue"}),
-		("fc_boq_budget", {"label": "Dashboard", "type": "Page", "link_to": "fc-project-dashboard", "color": "Blue"}),
-		("fc_tenders", {"label": "Tenders", "type": "DocType", "link_to": "FC Tender",
-			"stats_filter": json.dumps({"status": ["in", ["Published", "Under Evaluation"]]}), "color": "Orange"}),
-		("fc_subcontracts", {"label": "Subcontracts", "type": "DocType", "link_to": "FC Subcontract",
-			"stats_filter": json.dumps({"status": ["in", ["Active", "Practically Complete"]]}), "color": "Orange"}),
-		("fc_subcontracts", {"label": "Certificates", "type": "DocType", "link_to": "FC Subcontract Certificate",
-			"stats_filter": json.dumps({"docstatus": 0}), "color": "Orange"}),
-		("fc_client_billing", {"label": "Valuations", "type": "DocType", "link_to": "FC Client Valuation",
+		("fc_boq_budget", "Jobs", {"label": "Dashboard", "type": "Page", "link_to": "fc-project-dashboard",
 			"color": "Blue"}),
-		("fc_site", {"label": "Site", "type": "Page", "link_to": "fuse-site", "color": "Green"}),
-		("fc_site", {"label": "Crew Time", "type": "DocType", "link_to": "FC Crew Timesheet",
-			"stats_filter": json.dumps({"status": "Pending Approval"}), "color": "Red"}),
-		("fc_site", {"label": "Daily Reports", "type": "DocType", "link_to": "FC Daily Site Report",
-			"color": "Grey"}),
-		("fc_documents", {"label": "Documents", "type": "DocType", "link_to": "FC Document Register",
-			"color": "Grey"}),
+		("fc_boq_budget", "Jobs", {"label": "BOQs", **_counted(
+			"FC BOQ", {"status": ["in", ["Draft", "Submitted"]]}, "not awarded", "Blue")}),
+		("fc_tenders", "Jobs", {"label": "Tenders", **_counted(
+			"FC Tender", {"status": ["in", ["Published", "Under Evaluation"]]}, "open", "Orange")}),
+		("fc_subcontracts", "Money", {"label": "Subcontracts", **_counted(
+			"FC Subcontract", {"docstatus": 0}, "to sign", "Orange")}),
+		("fc_subcontracts", "Money", {"label": "Certificates", **_counted(
+			"FC Subcontract Certificate", {"docstatus": 0}, "to approve", "Orange")}),
+		("fc_client_billing", "Money", {"label": "Valuations", **_counted(
+			"FC Client Valuation", {"docstatus": 0}, "draft", "Orange")}),
+		("fc_subcontracts", "Money", {"label": "Retention", "type": "Report", "link_to": "FC Retention Ledger",
+			"color": "Orange"}),
+		("fc_site", "Site", {"label": "Site", "type": "Page", "link_to": "fuse-site", "color": "Green"}),
+		("fc_site", "Site", {"label": "Crew Time", **_counted(
+			"FC Crew Timesheet", {"status": "Pending Approval"}, "to approve", "Red")}),
+		("fc_site", "Site", {"label": "Daily Reports", **_counted(
+			"FC Daily Site Report", {"docstatus": 0}, "draft", "Grey")}),
+		("fc_documents", "Site", {"label": "Documents", **_counted(
+			"FC Document Register", {"status": "Under Review"}, "in review", "Grey")}),
 	]
 
 
@@ -355,7 +372,7 @@ def build_workspace():
 	def on(key):
 		return key is None or active.get(key, True)
 
-	shortcuts = [s for key, s in _shortcuts() if on(key)]
+	shortcuts = [(band, s) for key, band, s in _shortcuts() if on(key)]
 	cards = [(label, links) for key, label, links in _cards() if on(key)]
 
 	if frappe.db.exists("Workspace", WORKSPACE):
@@ -381,11 +398,20 @@ def build_workspace():
 	doc.is_hidden = 0
 	doc.sequence_id = 3
 
-	content = [{"id": "fc_head", "type": "header",
-		"data": {"text": '<span class="h4"><b>Construction</b></span>', "col": 12}}]
-	for index, shortcut in enumerate(shortcuts):
+	def header(key, text):
+		return {"id": key, "type": "header", "data": {"text": f'<span class="h4"><b>{text}</b></span>', "col": 12}}
+
+	# Tiles first, four to a row, each band under its own heading; the full menu below.
+	content = []
+	band = None
+	for index, (shortcut_band, shortcut) in enumerate(shortcuts):
+		if shortcut_band != band:
+			band = shortcut_band
+			content.append(header(f"fc_h{index}", band))
 		doc.append("shortcuts", dict(shortcut))
 		content.append({"id": f"fc_s{index}", "type": "shortcut", "data": {"shortcut_name": shortcut["label"], "col": 3}})
+	if cards:
+		content.append(header("fc_h_menu", "Everything else"))
 	for index, (label, links) in enumerate(cards):
 		doc.append("links", {"type": "Card Break", "label": label})
 		for link in links:

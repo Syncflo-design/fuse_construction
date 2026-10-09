@@ -21,6 +21,9 @@ after_migrate = "fuse_construction.install.after_install"
 fuse_modules = ["fuse_construction.registry.get_modules"]
 fuse_tiles = ["fuse_construction.registry.get_tiles"]
 fuse_guides = ["fuse_construction.guides.get_guides"]
+# The Construction workspace is a construction login's desk: fuse_theme draws its shortcuts
+# as Fuse tiles, with these icons and descriptions.
+fuse_desk_tiles = ["fuse_construction.registry.get_desk_tiles"]
 
 # Tells the desk whether this is the Fuse demo site, so the demo loader's menu item appears
 # there and on no client's site.
